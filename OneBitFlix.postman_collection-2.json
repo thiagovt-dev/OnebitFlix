@@ -1,0 +1,1394 @@
+{
+	"info": {
+		"_postman_id": "7c8ff319-d90a-42f7-bb39-713bed9b8c55",
+		"name": "OneBitFlix",
+		"description": "Documentação da API do OneBitFlix.\n\nApenas os endpoints da aplicação estão descritos aqui. O painel admin será gerenciado pelo AdminJS.\n\nOs endpoints estão divididos em:\n\n*   Autenticação: Registro e login de usuários (via token)\n*   Categorias: Obter as categorias e os cursos delas\n*   Cursos: Obter diversas listas de cursos e os detalhes e episódios de um curso\n*   Episódios: Obter o vídeo de um episódio e controlar o progresso\n*   Perfis: Gerenciamento dos perfis da conta e lista de \"Continuar Assistindo\"\n*   Favorites: Gerenciamento da lista de favoritos (ou \"Minha lista\") de um perfil.\n*   Likes: Marcar cursos com um \"Gostei'\n*   Usuários: Informações da conta de usuário.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Registro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"phone\": \"22996057593\",\r\n    \"birth\": \"1995-09-02\",\r\n    \"email\": \"john@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"first_name\": \"Isaac\",\r\n    \"last_name\": \"Pontes\",\r\n    \"phone\": \"22996057593\",\r\n    \"birth\": \"1995-09-02\",\r\n    \"email\": \"isaac@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"firstName\": \"Isaac\",\n    \"lastName\": \"Pontes\",\n    \"phone\": \"22996057593\",\n    \"birth\": \"1995-09-02T00:00:00.000Z\",\n    \"email\": \"isaac@email.com\",\n    \"password\": \"$2b$10$u1r3qwyi.vdFUl4mK7CSzeb0MsBqvZNJ7HPhmU/LCJaPInEnd/LTy\",\n    \"role\": \"user\",\n    \"updatedAt\": \"2022-02-08T22:47:52.259Z\",\n    \"createdAt\": \"2022-02-08T22:47:52.259Z\"\n}"
+						},
+						{
+							"name": "Email já existente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"User\",\r\n    \"email\": \"user@email.com\",\r\n    \"password\": \"senha\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"Email already registered\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"isaac@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"isaac@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"authenticated\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlzYWFjQGVtYWlsLmNvbSIsImlhdCI6MTY0NDM2ODcyOCwiZXhwIjoxNjQ0OTczNTI4fQ.sNFGrcESBi8Chjyyf-3HW6OIi1TdVPvLrSNTapzyY3U\"\n}"
+						},
+						{
+							"name": "Senha incorreta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"isaac@email.com\",\r\n    \"password\": \"senhaerrada\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"Senha incorreta\"\n}"
+						},
+						{
+							"name": "Email não registrado",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"user@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"E-mail não registrado\"\n}"
+						}
+					]
+				}
+			],
+			"description": "A autenticação é feita utilizando Json Web Tokens (JWT). O registro na aplicação é livre."
+		},
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "Todas as categorias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "perPage",
+									"value": "4",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso (com paginação padrão)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/categories",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categories"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": null,
+											"description": "The pagination param. Defaults to 0.",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"categories\": [\n        {\n            \"id\": 3,\n            \"name\": \"Cursos Completos\",\n            \"position\": 1\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Tecnologias Back-end\",\n            \"position\": 2\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Tecnologias Front-end\",\n            \"position\": 3\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Ferramentas de Desenvolvimento\",\n            \"position\": 4\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Produtividade\",\n            \"position\": 5\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Soft-Skills\",\n            \"position\": 6\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Expandindo Conhecimentos\",\n            \"position\": 7\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Carreira\",\n            \"position\": 8\n        }\n    ],\n    \"page\": 1,\n    \"perPage\": 10,\n    \"total\": 8\n}"
+						},
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/categories?page=2&perPage=4",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categories"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "perPage",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"categories\": [\n        {\n            \"id\": 7,\n            \"name\": \"Produtividade\",\n            \"position\": 5\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Soft-Skills\",\n            \"position\": 6\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Expandindo Conhecimentos\",\n            \"position\": 7\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Carreira\",\n            \"position\": 8\n        }\n    ],\n    \"page\": 2,\n    \"perPage\": 4,\n    \"total\": 8\n}"
+						}
+					]
+				},
+				{
+					"name": "Cursos de uma categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/categories/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4",
+									"description": "The cateogry id"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/categories/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null,
+											"description": "The category id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": \"Tecnologias Front-end\",\n    \"courses\": [\n        {\n            \"id\": 6,\n            \"name\": \"TDD na Prática: Testando Aplicações React\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Especialista Front-end: React\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Especialista Front-end: Vue.js\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Criando Sites e Apps 3D com Three.js\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Dominando o Bootstrap 5\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cursos",
+			"item": [
+				{
+					"name": "Cursos em destaque",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/courses/featured",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"courses",
+								"featured"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/courses/featured",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"courses",
+										"featured"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 6,\n        \"name\": \"TDD na Prática: Testando Aplicações React\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"thumbnailUrl\": null\n    },\n    {\n        \"id\": 5,\n        \"name\": \"TDD na Prática: Testando APIs com Node.js\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"thumbnailUrl\": null\n    },\n    {\n        \"id\": 15,\n        \"name\": \"Programador Nômade\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"thumbnailUrl\": null\n    },\n    {\n        \"id\": 1,\n        \"name\": \"Programador Full-stack Javascript\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"thumbnailUrl\": \"thumbnails/course-1/Screenshot from 2022-02-17 16-08-03.png\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Buscar cursos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"prog\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/courses/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"courses",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"description": "The page number",
+									"disabled": true
+								},
+								{
+									"key": "perPage",
+									"value": "4",
+									"description": "The amount of records per page",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso (buscando por nome=\"prog\")",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"prog\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/courses/search",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"courses",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"courses\": [\n        {\n            \"id\": 11,\n            \"name\": \"Visual Studio Code para Programadores Javascript\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Como ser um Programador Produtivo\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Como ser um Programador Freelancer\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Ingês Técnico para Programadores\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 15,\n            \"name\": \"Programador Nômade\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null\n        },\n        {\n            \"id\": 1,\n            \"name\": \"Programador Full-stack Javascript\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": \"thumbnails/course-1/Screenshot from 2022-02-17 16-08-03.png\"\n        }\n    ],\n    \"page\": 1,\n    \"perPage\": 10,\n    \"total\": 6\n}"
+						}
+					]
+				},
+				{
+					"name": "Cursos mais populares (top 10)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/courses/popular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"courses",
+								"popular"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/courses/popular",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"courses",
+										"popular"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Programador Full-stack Javascript\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"thumbnailurl\": \"thumbnails/course-1/Screenshot from 2022-02-17 16-08-03.png\",\n        \"likes\": \"4\"\n    },\n    {\n        \"id\": 7,\n        \"name\": \"Especialista Front-end: React\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"thumbnailurl\": null,\n        \"likes\": \"2\"\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Criando APIs Profissionais com Ruby on Rails\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"thumbnailurl\": null,\n        \"likes\": \"1\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Dominando a Linguagem Ruby\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"thumbnailurl\": null,\n        \"likes\": \"1\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Lançamentos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/courses/newest",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"courses",
+								"newest"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/courses/popular",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"courses",
+										"popular"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[]"
+						}
+					]
+				},
+				{
+					"name": "Capa do curso",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/thumbnails/course-1/Screenshot from 2022-02-17 16-08-03.png",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"thumbnails",
+								"course-1",
+								"Screenshot from 2022-02-17 16-08-03.png"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detalhes de um curso",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/courses/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/titles/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"titles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Programador Full-stack Javascript\",\n    \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n    \"thumbnailUrl\": \"thumbnails/course-1/Screenshot from 2022-02-17 16-08-03.png\",\n    \"episodes\": [\n        {\n            \"id\": 1,\n            \"name\": \"Introdução\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"order\": 1,\n            \"videoUrl\": null,\n            \"secondsLong\": 300\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Olá, Mundo!\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"order\": 2,\n            \"videoUrl\": null,\n            \"secondsLong\": 300\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Primeira Página HTML\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"order\": 3,\n            \"videoUrl\": null,\n            \"secondsLong\": 600\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Utilizando CSS\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"order\": 4,\n            \"videoUrl\": null,\n            \"secondsLong\": 300\n        }\n    ],\n    \"liked\": true\n}"
+						},
+						{
+							"name": "Curso não encontrado",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"profile_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/courses/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"courses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "671"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"Curso não encontrado\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Episódios",
+			"item": [
+				{
+					"name": "Stream de um episódio",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Range",
+								"value": "bytes=0-8192",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/episodes/stream?videoUrl=videos/course-2/3-motivos-para-se-tornar-um-programador.mp4&token=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"episodes",
+								"stream"
+							],
+							"query": [
+								{
+									"key": "videoUrl",
+									"value": "videos/course-2/3-motivos-para-se-tornar-um-programador.mp4"
+								},
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Progresso do episódio por um perfil",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/episodes/:id/watchTime",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"episodes",
+								":id",
+								"watchTime"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Definir progresso do episódio por perfil",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"seconds\": 425\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/episodes/:id/watchTime",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"episodes",
+								":id",
+								"watchTime"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favoritos (\"Minha lista\")",
+			"item": [
+				{
+					"name": "Lista completa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/favorites",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/favorites",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"favorites"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"profileId\": \"1\",\n    \"courses\": [\n        {\n            \"id\": 2,\n            \"name\": \"Dominando a Linguagem Ruby\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null,\n            \"featured\": false,\n            \"categoryId\": 2\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Criando APIs Profissionais com Ruby on Rails\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null,\n            \"featured\": false,\n            \"categoryId\": 3\n        },\n        {\n            \"id\": 5,\n            \"name\": \"TDD na Prática: Testando APIs com Node.js\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null,\n            \"featured\": true,\n            \"categoryId\": 3\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Adicionar um curso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"courseId\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/favorites",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"courseId\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/favorites",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"favorites"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"courseId\": 4,\n    \"userId\": 3,\n    \"updatedAt\": \"2022-02-11T02:46:57.806Z\",\n    \"createdAt\": \"2022-02-11T02:46:57.806Z\"\n}"
+						},
+						{
+							"name": "Adicionar duplicado",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"courseId\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/favorites",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"favorites"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"Curso já existente na lista\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Excluir curso",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"courseId\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/favorites",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"courseId\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/favorites",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"favorites"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Likes",
+			"item": [
+				{
+					"name": "Adicionar um \"Gostei\" a um curso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"courseId\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/likes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"likes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"courseId\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/like",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"like"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Remover um \"Gostei\" de um curso",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseId\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/likes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"likes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"courseId\": 4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/likes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"likes"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Usuários",
+			"item": [
+				{
+					"name": "Lista de \"Continuar Assistindo\"",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/watching",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"watching"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/watching",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watching"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 6,\n        \"name\": \"Introdução\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"order\": 10,\n        \"videoUrl\": \"videos/course-2/configuracao-obs-canvas.mp4\",\n        \"secondsLong\": 300,\n        \"courseId\": 2,\n        \"createdAt\": \"2022-02-24T23:39:39.565Z\",\n        \"updatedAt\": \"2022-02-24T23:39:39.587Z\",\n        \"watchTime\": {\n            \"seconds\": 425,\n            \"userId\": 3,\n            \"episodeId\": 6,\n            \"createdAt\": \"2022-02-24T23:40:47.995Z\",\n            \"updatedAt\": \"2022-02-25T01:09:45.623Z\"\n        },\n        \"course\": {\n            \"id\": 2,\n            \"name\": \"Dominando a Linguagem Ruby\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": null,\n            \"featured\": false,\n            \"categoryId\": 2,\n            \"createdAt\": \"2022-02-15T21:19:46.980Z\",\n            \"updatedAt\": \"2022-02-15T21:19:46.980Z\"\n        }\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Utilizando CSS\",\n        \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n        \"order\": 4,\n        \"videoUrl\": null,\n        \"secondsLong\": 300,\n        \"courseId\": 1,\n        \"createdAt\": \"2022-02-15T21:27:47.351Z\",\n        \"updatedAt\": \"2022-02-15T21:27:47.351Z\",\n        \"watchTime\": {\n            \"seconds\": 50,\n            \"userId\": 3,\n            \"episodeId\": 4,\n            \"createdAt\": \"2022-02-25T00:18:45.793Z\",\n            \"updatedAt\": \"2022-02-25T00:18:45.793Z\"\n        },\n        \"course\": {\n            \"id\": 1,\n            \"name\": \"Programador Full-stack Javascript\",\n            \"synopsis\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n            \"thumbnailUrl\": \"thumbnails/course-1/Screenshot from 2022-02-17 16-08-03.png\",\n            \"featured\": true,\n            \"categoryId\": 2,\n            \"createdAt\": \"2022-02-15T21:19:28.882Z\",\n            \"updatedAt\": \"2022-02-17T19:08:09.967Z\"\n        }\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Detalhes do usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/account",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/account",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"account"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"firstName\": \"Isaac\",\n    \"lastName\": \"Larrubia\",\n    \"phone\": \"22996057593\",\n    \"birth\": \"1995-09-02T00:00:00.000Z\",\n    \"email\": \"isaac@email.com\",\n    \"password\": \"$2b$10$zcS45YvC2qhGy8quVwQgWOQZVDlPuoWILh4yGbeJ.CDtpPzMUz9W2\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Atualizar dados (exceto a senha)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastName\": \"Larrubia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/account",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"first_name\": \"Lívia\",\r\n    \"last_name\": \"Pontes\",\r\n    \"phone\": \"22996057593\",\r\n    \"birth\": \"1996-02-20\",\r\n    \"email\": \"livia@email.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/account",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"account"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"phone\": \"22996057593\",\n    \"birth\": \"1995-09-02T00:00:00.000Z\",\n    \"email\": \"isaac@email.com\",\n    \"password\": \"$2b$10$zcS45YvC2qhGy8quVwQgWOQZVDlPuoWILh4yGbeJ.CDtpPzMUz9W2\",\n    \"role\": \"user\",\n    \"firstName\": \"Isaac\",\n    \"lastName\": \"Larrubia\",\n    \"createdAt\": \"2022-02-15T21:32:32.421Z\",\n    \"updatedAt\": \"2022-02-22T00:14:59.544Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Atualizar senha",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\": \"123456\",\r\n    \"newPassword\": \"654321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accountPassword",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accountPassword"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"currentPassword\": \"123456\",\r\n    \"newPassword\": \"654321\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/accountPassword",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"accountPassword"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZmlyc3RfbmFtZSI6IklzYWFjIiwiZW1haWwiOiJpc2FhY0BlbWFpbC5jb20iLCJpYXQiOjE2NDUxNDg2NzksImV4cCI6MTY0NTc1MzQ3OX0.W-VKdPX3daCIicpsXgC_pWgIcerXpgwFcegxjNwA2Ms",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:3000",
+			"type": "string"
+		}
+	]
+}
