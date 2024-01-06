@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "jsx": "react",
-    "module": "nodenext",
+    "module": "NodeNext",
     "moduleResolution": "nodenext",
-    "target": "ES2021",
+    "target": "ESNext",
     "declaration": false,
     "removeComments": true,
     "emitDecoratorMetadata": false,
@@ -16,8 +15,11 @@
     "incremental": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["**/src/**/*"]
+   "ts-node": {
+     "esm": true,
+   },
+  "exclude": ["node_modules"],
+  "include": ["**/src/**/*", "public"]
 }

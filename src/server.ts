@@ -6,7 +6,8 @@ import path from "path"
 const app = express()
 
 app.use(adminJs.options.rootPath, adminJsRouter)
-app.use(express.static(path.join( "public")))
+
+app.use(express.static(path.join("public")));
 
 const PORT = process.env.PORT || 3000
 
