@@ -1,5 +1,14 @@
 import { Sequelize } from "sequelize";
 
-const database = require('../../config/config.js')
-
-export const sequelize = new Sequelize(database)
+export const database = new Sequelize({
+  dialect: "postgres",
+  host: "localhost",
+  username: "onebitflix",
+  password: "onebitflix",
+  database: "dev_onebitflix",
+  port: 5433,
+  define: {
+    timestamps: true,
+    underscored: true,
+  },
+});
