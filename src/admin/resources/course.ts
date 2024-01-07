@@ -1,4 +1,8 @@
-import { ResourceOptions } from "adminjs";
+import { FeatureType, ResourceOptions } from "adminjs";
+import path from "path";
+import * as url from "url";
+import { componentLoader } from "../componentLoader.js";
+import uploadFileFeature from "@adminjs/upload";
 
 export const courseResourceOptions: ResourceOptions = {
   navigation: "Catálogo",
@@ -15,7 +19,7 @@ export const courseResourceOptions: ResourceOptions = {
     "featured",
     "categoryId",
     "createdAt",
-    "updatedAt"
+    "updatedAt",
   ],
   listProperties: ["id", "name", "featured", "categoryId"],
   showProperties: [
@@ -26,6 +30,29 @@ export const courseResourceOptions: ResourceOptions = {
     "thumbnailUrl",
     "categoryId",
     "createdAt",
-    "updatedAt"
+    "updatedAt",
   ],
 };
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+
+export const courseResourceFeatures: FeatureType[] = [
+  uploadFileFeature({
+    provider: {
+      local: {
+        bucket: path.join(__dirname, "../../../public"),
+        opts: {
+          baseUrl: "",
+        },
+      },
+    },
+    componentLoader,
+    validation: { mimeTypes: ["image/png", "image/jpg", "image/gif"] },
+    properties: {
+      key: "thumbnailUrl",
+      file: "uploadThumbnail",
+    },
+    uploadPath: (record, filename) =>
+      `thumbnails/course-${record.get("id")}/${filename}`,
+  }),
+];
