@@ -27,6 +27,12 @@ module.exports = {
       },
     });
 
+    const random = Math.floor(Math.random() * 1000);
+    const categoryRandomId = random * 1000;
+    await queryInterface.sequelize.query(
+      `ALTER SEQUENCE "categories_id_seq" RESTART WITH ${categoryRandomId};`
+    );
+
   },
 
   down: async (queryInterface, Sequelize) => {
