@@ -1,10 +1,8 @@
 import uploadFileFeature from "@adminjs/upload";
 import { FeatureType, ResourceOptions } from "adminjs";
 import path from "path";
-import * as url from 'url'
-import { componentLoader } from '../componentLoader.js';
-
-
+import * as url from "url";
+import { componentLoader } from "../componentLoader.js";
 
 export const episodeResourceOptions: ResourceOptions = {
   navigation: "Catálogo",
@@ -37,18 +35,16 @@ export const episodeResourceOptions: ResourceOptions = {
     "updatedAt",
   ],
 };
-const __dirname = url.fileURLToPath(new URL('.',import.meta.url))
-
-
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 export const episodeResourceFeatures: FeatureType[] = [
   uploadFileFeature({
     provider: {
       local: {
-          bucket: path.join(__dirname, "../../../uploads"),
-          opts: {
-              baseUrl: ""
-          }
+        bucket: path.join(__dirname, "../../../uploads"),
+        opts: {
+          baseUrl: "",
+        },
       },
     },
     multiple: true,
@@ -61,4 +57,4 @@ export const episodeResourceFeatures: FeatureType[] = [
       `videos/course-${record.get("courseId")}/${filename}`,
   }),
 ];
-// 
+//
