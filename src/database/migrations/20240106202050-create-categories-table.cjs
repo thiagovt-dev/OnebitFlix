@@ -19,17 +19,14 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
       },
     });
-    const randomId = Math.floor(Math.random() * 1000);
-    const randomAutoIncrement = randomId * 1000;
 
-    await queryInterface.sequelize.query(`ALTER SEQUENCE "categories_id_seq" RESTART WITH ${randomAutoIncrement};` );
   },
 
   down: async (queryInterface, Sequelize) => {
