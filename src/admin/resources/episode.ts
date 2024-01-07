@@ -47,7 +47,7 @@ export const episodeResourceFeatures: FeatureType[] = [
         },
       },
     },
-    multiple: true,
+    validation: { mimeTypes: ["video/mp4", "video/webm", "video/x-matroska"] },
     componentLoader,
     properties: {
       key: "videoUrl",
