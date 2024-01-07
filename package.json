@@ -4,10 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "copy-assets": "ncp src/public dist/public",
-    "build": "tsc && npm run copy-assets",
-    "dev": "ts-node-esm index.ts",
-    "start": " nodemon index.ts",
     "dev-test": "nodemon -I --exec node --loader ts-node/esm src/server.ts"
   },
   "keywords": [],
