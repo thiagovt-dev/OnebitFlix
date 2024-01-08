@@ -2,15 +2,18 @@ import AdminJs from "adminjs";
 import AdminJsExpress from "@adminjs/express";
 import AdminJsSequelize from "@adminjs/sequelize";
 import { database } from "../database/index.js";
-import { adminJsResource } from './resources/index.js';
-import { componentLoader } from './componentLoader.js';
+import { adminJsResource } from "./resources/index.js";
+import { componentLoader } from "./componentLoader.js";
+import { User } from "../models/Users.js";
+import bcrypt from "bcrypt";
 
 AdminJs.registerAdapter(AdminJsSequelize);
 
 export const adminJs = new AdminJs({
   databases: [database],
   rootPath: "/admin",
-  resources: adminJsResource, componentLoader,
+  resources: adminJsResource,
+  componentLoader,
   branding: {
     companyName: "OneBitFlix",
     logo: "/onebitflix.svg",
@@ -34,4 +37,22 @@ export const adminJs = new AdminJs({
   },
 });
 
-export const adminJsRouter = AdminJsExpress.buildRouter(adminJs);
+export const adminJsRouter = AdminJsExpress.buildAuthenticatedRouter(
+  adminJs,
+  {
+    authenticate: async (email, password) => {
+      const user = await User.findOne({ where: { email } });
+
+      if (user && user.role === 'admin') {
+        const matched = await bcrypt.compare(password, user.password);
+        if (matched) return user;
+      }
+      return false;
+    },
+    cookiePassword: "senha-de-cookie",
+  },
+  null,{
+    resave: false,
+    saveUninitialized: false,
+  }
+);
