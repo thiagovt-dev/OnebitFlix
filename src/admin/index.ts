@@ -8,6 +8,7 @@ import { User } from "../models/Users.js";
 import bcrypt from "bcrypt";
 import { locale } from "./locale.js";
 
+
 AdminJs.registerAdapter(AdminJsSequelize);
 
 export const adminJs = new AdminJs({
@@ -36,7 +37,7 @@ export const adminJs = new AdminJs({
       },
     },
   },
-  locale: locale
+  locale
 });
 
 export const adminJsRouter = AdminJsExpress.buildAuthenticatedRouter(
