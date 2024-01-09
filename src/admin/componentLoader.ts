@@ -1,3 +1,9 @@
 import { ComponentLoader } from "adminjs";
 
-export const componentLoader = new ComponentLoader();
+const componentLoader = new ComponentLoader();
+
+const Components = {
+  Dashboard: componentLoader.add("Dashboard", "./components/Dashboard.tsx"),
+};
+
+export { componentLoader, Components };
