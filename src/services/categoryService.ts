@@ -19,13 +19,13 @@ const categoryService = {
   },
   findByIdWithCourses: async (id: string) => {
     const categoryWithCourse = await Category.findByPk(id, {
-      attributes: ["id", ["name", "Categoria"]],
+      attributes: ["id", "name"],
       include: {
         association: "courses",
         attributes: [
           "id",
-          ["name", "Curso"],
-          ["synopsis", "Resumo"],
+          "name",
+          "synopsis",
           ["thumbnail_url", "thumbnailUrl"],
         ],
       },
