@@ -3,7 +3,7 @@ import { Course } from './Courses.js';
 import { Episode } from './Episode.js';
 import { User } from './Users.js';
 
-Category.hasMany(Course)
+Category.hasMany(Course, {as: 'courses'})
 
 Course.belongsTo(Category)
 Course.hasMany(Episode)
