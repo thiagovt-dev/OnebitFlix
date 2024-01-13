@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import courseService from "../services/coursesService.js";
 import getPaginationParams from "../helpers/getPaginationParams.js";
+import { AuthorizationRequest } from "../middlewares/auth.js";
+import { likeService } from "../services/likeService.js";
+import { favoriteService } from "../services/favoriteService.js";
 
 export const coursesController = {
   featured: async (req: Request, res: Response) => {
@@ -15,11 +18,18 @@ export const coursesController = {
       }
     }
   },
-  show: async (req: Request, res: Response) => {
+  show: async (req: AuthorizationRequest, res: Response) => {
+    const userId = req.user!.id
     const { id } = req.params;
     try {
       const course = await courseService.findByIdWithEpisodes(id);
-      return res.json(course);
+      if(!course) return res.status(404).json({ message: "Course was not found" });
+
+      const liked = await likeService.isLiked(userId, Number(id))
+      const favorited = await favoriteService.isFavorited(userId, Number(id))
+      return res.json({...course.get(), liked, favorited})
+      
+      
     } catch (err) {
       if (err) {
         if (err instanceof Error) {
