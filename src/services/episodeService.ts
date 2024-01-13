@@ -1,16 +1,13 @@
 import { Response } from "express";
 import fs from "fs";
 import path from "path";
+import { WatchTime, WatchTimeAttributes } from "../models/WatchTime.js";
 import * as url from "url";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 export const episodeService = {
-  streamEpisodeResponse: (
-    res: Response,
-    videoUrl: string,
-    range: string | undefined
-  ) => {
+  streamEpisodeResponse: (res: Response, videoUrl: string, range: string | undefined) => {
     const filePath = path.join(__dirname, "../../uploads", videoUrl);
     const fileStat = fs.statSync(filePath);
 
@@ -38,6 +35,29 @@ export const episodeService = {
       };
       res.writeHead(200, head);
       fs.createReadStream(filePath).pipe(res);
+    }
+  },
+  getWatchTime: async (userId: number, episodeId: number) => {
+    const watchTime = await WatchTime.findOne({
+      where: { userId, episodeId },
+    });
+    return watchTime;
+  },
+  setWatchTime: async ({ userId, episodeId, seconds }: WatchTimeAttributes) => {
+    const watchTimeAlreadyExist = await WatchTime.findOne({
+      where: { userId, episodeId },
+    });
+    if (watchTimeAlreadyExist) {
+      watchTimeAlreadyExist.seconds = seconds;
+      await watchTimeAlreadyExist.save();
+      return watchTimeAlreadyExist;
+    } else {
+      const watchTime = await WatchTime.create({
+        userId,
+        episodeId,
+        seconds,
+      });
+      return watchTime;
     }
   },
 };
