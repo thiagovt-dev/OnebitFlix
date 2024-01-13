@@ -18,8 +18,16 @@ export const favoriteService = {
       },
     });
     return {
-        userId,
-        courses: favorites.map(favorite => favorite.Course )
+      userId,
+      courses: favorites.map((favorite) => favorite.Course),
     };
   },
+
+  delete: async (userId: number, courseId: number) => {
+    const favorite = Favorite.destroy({
+      where: { userId, courseId },
+    });
+    return favorite;
+  },
+
 };
