@@ -42,7 +42,7 @@ export const favoritesController = {
       const course = await Course.findOne({where:{id: courseId}})
       if(!course) throw new Error ('This course not exits')
       const favorite = await favoriteService.delete(userId, Number(courseId));
-      return res.status(201).json({message: 'Course deleted'});
+      return res.status(201).json({message: 'Removed from favorites'});
     } catch (err) {
       if (err) {
         if (err instanceof Error) {
