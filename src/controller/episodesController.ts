@@ -22,7 +22,7 @@ export const episodesController = {
     const { id } = req.params
     try {
       const watchTime = await episodeService.getWatchTime(userId, Number(id))
-      return res.json({watchTime})
+      return res.status(201).json({watchTime})
     } catch (err) {
       if (err) {
         if (err instanceof Error) {
@@ -38,7 +38,7 @@ export const episodesController = {
     const {seconds} = req.body
     try {
       const watchTime = await episodeService.setWatchTime({ userId, episodeId, seconds });
-      return res.json(watchTime)
+      return res.status(201).json(watchTime)
     } catch (err) {
       if (err) {
         if (err instanceof Error) {

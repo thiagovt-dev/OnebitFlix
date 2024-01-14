@@ -39,7 +39,7 @@ export const coursesController = {
   newest: async (req: Request, res: Response) => {
     try {
       const newest = await courseService.getNewestCourse();
-      return res.json(newest);
+      return res.status(201).json(newest);
     } catch (err) {
       if (err) {
         if (err instanceof Error) {
@@ -52,7 +52,7 @@ export const coursesController = {
   popular: async (req: Request, res: Response) => {
     try {
       const topTen = await courseService.getTopTenByLikes();
-      return res.json({ topTen });
+      return res.status(201).json({ topTen });
     } catch (err) {
       if (err) {
         if (err instanceof Error) {
@@ -67,7 +67,7 @@ export const coursesController = {
     try {
       if (typeof name !== "string") throw new Error("name param must be of type string");
       const searchCourse = await courseService.findByName(name, page, perPage);
-      return res.json(searchCourse);
+      return res.status(201).json(searchCourse);
     } catch (err) {
       if (err) {
         if (err instanceof Error) {

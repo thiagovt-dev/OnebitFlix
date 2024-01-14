@@ -24,7 +24,7 @@ const categoriesController = {
     const { id } = req.params;
     try {
       const category = await categoryService.findByIdWithCourses(id);
-      return res.json(category);
+      return res.status(201).json(category);
     } catch (err) {
       if (err) {
         if (err instanceof Error) {

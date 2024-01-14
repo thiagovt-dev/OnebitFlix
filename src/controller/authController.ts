@@ -41,7 +41,7 @@ export const authController = {
                 }
                 const token = jwtService.signToken(payload, '1d')
 
-                return res.json({ authenticated: true, ...payload, token})
+                return res.status(201).json({ authenticated: true, ...payload, token });
             })
         } catch (err) {
             if (err) {
