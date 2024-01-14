@@ -33,6 +33,22 @@ export const userService = {
     const user = await User.create(attributes);
     return user;
   },
+
+  updateUser: async (
+    id: number,
+    attributes: {
+      firstName: string;
+      lastName: string;
+      phone: string;
+      birth: Date;
+      email: string;
+    }
+  ) => {
+    const [affectedRows, updatedUsers] = await User.update(attributes, { where: { id }, returning: true });
+
+    return updatedUsers[0];
+  },
+
   getKeepWatchList: async (id: number) => {
     const userWithWatchingEpisodes = await User.findByPk(id, {
       include: {
@@ -49,8 +65,8 @@ export const userService = {
     });
     if (!userWithWatchingEpisodes) throw new Error("User not found");
 
-    const keepWatchingList = filterLastEpisodesByCourse(userWithWatchingEpisodes.Episodes!)
+    const keepWatchingList = filterLastEpisodesByCourse(userWithWatchingEpisodes.Episodes!);
 
-    return keepWatchingList
+    return keepWatchingList;
   },
 };
