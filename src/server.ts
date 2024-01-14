@@ -3,8 +3,11 @@ import { database } from "./database/index.js"
 import { adminJs, adminJsRouter } from "./admin/index.js"
 import path from "path"
 import { router } from "./routes.js"
+import cors from "cors";
 
 const app = express()
+
+app.use(cors())
 
 app.use(adminJs.options.rootPath, adminJsRouter)
 
