@@ -22,5 +22,4 @@
      "esm": true,
    },
   "exclude": ["node_modules"],
-  "include": ["**/src/**/*", "public"]
 }
