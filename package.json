@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev-test": "nodemon -I --exec node --loader ts-node/esm src/server.ts"
+    "dev": "nodemon --no-warnings -I --exec node --loader ts-node/esm src/server.ts"
   },
   "keywords": [],
   "author": "",
