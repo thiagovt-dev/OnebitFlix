@@ -47,7 +47,7 @@ export const courseResourceFeatures: FeatureType[] = [
       },
     },
     componentLoader,
-    validation: { mimeTypes: ["image/png", "image/jpg", "image/gif"] },
+    validation: { mimeTypes: ["image/png", "image/jpg", "image/gif", "image/jpeg"] },
     properties: {
       key: "thumbnailUrl",
       file: "uploadThumbnail",
