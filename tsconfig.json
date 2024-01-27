@@ -11,15 +11,17 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "sourceMap": false,
+    "rootDir": "./src",
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
-   "ts-node": {
-     "esm": true,
-   },
+  "ts-node": {
+    "esm": true
+  },
   "exclude": ["node_modules"],
+  "include": ["public", "src", ".env"]
 }
