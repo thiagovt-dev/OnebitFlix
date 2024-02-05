@@ -3,5 +3,5 @@ dist/
 uploads/videos
 public/thumbnails
 .DS_Store
-.adminjs/
+.adminjs
 .env
