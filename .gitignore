@@ -1,7 +1,7 @@
 node_modules/
 dist/
-uploads/videos
+uploads/*
 public/thumbnails
 .DS_Store
-.adminjs
+/.adminjs/*
 .env

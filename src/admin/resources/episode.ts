@@ -57,4 +57,3 @@ export const episodeResourceFeatures: FeatureType[] = [
       `videos/course-${record.get("courseId")}/${filename}`,
   }),
 ];
-//
