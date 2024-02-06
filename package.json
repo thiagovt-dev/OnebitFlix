@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --no-warnings -I --exec node --loader ts-node/esm src/server.ts",
     "build": "tsc",
-    "start": "node ./dist/server.js"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
