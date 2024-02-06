@@ -89,7 +89,7 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 
 `JWT_KEY =` chave de autenticação do JWT 
 
-Para evitar erros de tipagem do Typescript utilizei o pacote env-var e criei um arquivo chamado enviromment.ts. Confira o arquivo em src/config/enviromment.ts
+Para evitar erros de tipagem do Typescript utilizei o pacote env-var e criei um arquivo chamado enviromment.ts. Confira o arquivo em [src/config/enviromment.ts](https://github.com/thiagovt-dev/OnebitFlix_backend/blob/master/src/config/environment.ts)
 
 ## Conclusão
 
